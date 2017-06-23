@@ -248,8 +248,16 @@ class DeepLinkManager
             // User can create custom validators for their properties. If none exist, validateValue will return YES by default.
             do{
                 var ioValue : AnyObject? = paramValue as AnyObject?
-                let hasProperty = viewController.responds(to: Selector(paramKey))
-//                try viewController.validateValue(&ioValue, forKey: paramKey)
+                
+                // Check if there is writable property in the viewController
+                let upperFirstCharacter = String(describing: paramKey.characters.first!).uppercased()
+                let range = paramKey.startIndex..<paramKey.index(after: paramKey.startIndex)
+                let firstUpperKey = paramKey.replacingCharacters(in: range, with: upperFirstCharacter) // e.g Title
+                let propSetter = Selector("set\(firstUpperKey):") // e.g. setTitle
+                
+//                let propSelector = Selector(paramKey)  -- does not check if property is writable
+                let hasProperty = viewController.responds(to: propSetter)
+//                try viewController.validateValue(&ioValue, forKey: paramKey) -- does not work any more.
                 if hasProperty {
                      try viewController.setValue(paramValue, forKey: paramKey)
                 }else{
