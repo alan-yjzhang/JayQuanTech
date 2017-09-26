@@ -21,6 +21,7 @@
 		16CB43241F01E10C00C0C94D /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB431D1F01E10C00C0C94D /* SettingsLauncher.swift */; };
 		16CB43251F01E10C00C0C94D /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB431E1F01E10C00C0C94D /* Video.swift */; };
 		16CB43261F01E10C00C0C94D /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB431F1F01E10C00C0C94D /* VideoCell.swift */; };
+		16E1E9D51F7AE3BC0035840B /* MenuBar4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E1E9D41F7AE3BC0035840B /* MenuBar4.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		16CB431D1F01E10C00C0C94D /* SettingsLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		16CB431E1F01E10C00C0C94D /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		16CB431F1F01E10C00C0C94D /* VideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		16E1E9D41F7AE3BC0035840B /* MenuBar4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBar4.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				16CB43191F01E10C00C0C94D /* Extensions.swift */,
 				16CB431A1F01E10C00C0C94D /* MenuBar.swift */,
+				16E1E9D41F7AE3BC0035840B /* MenuBar4.swift */,
 				16CB431B1F01E10C00C0C94D /* PageController.swift */,
 				16CB431C1F01E10C00C0C94D /* PageControllerWithMenu.swift */,
 				16CB431D1F01E10C00C0C94D /* SettingsLauncher.swift */,
@@ -292,6 +295,7 @@
 				16CB43251F01E10C00C0C94D /* Video.swift in Sources */,
 				16CB43221F01E10C00C0C94D /* PageController.swift in Sources */,
 				16CB43231F01E10C00C0C94D /* PageControllerWithMenu.swift in Sources */,
+				16E1E9D51F7AE3BC0035840B /* MenuBar4.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +548,7 @@
 				16CB43121F01E04B00C0C94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		16CB43131F01E04B00C0C94D /* Build configuration list for PBXNativeTarget "PageViewControllerTestTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +557,7 @@
 				16CB43151F01E04B00C0C94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		16CB43161F01E04B00C0C94D /* Build configuration list for PBXNativeTarget "PageViewControllerTestUITests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +566,7 @@
 				16CB43181F01E04B00C0C94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

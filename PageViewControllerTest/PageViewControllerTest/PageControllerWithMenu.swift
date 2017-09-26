@@ -46,11 +46,11 @@ class PageControllerWithMenuBar: UIViewController, MenuSelectionDelegate {
     class func createWithTestPageControllers() ->PageControllerWithMenuBar {
         var testpages = [UIViewController]()
         let viewColors = [ UIColor.blue, UIColor.brown, UIColor.red, UIColor.gray]
-        for i in 0..<4 {
+        for i in 0..<6 {
 //            let url : String = "View " + i.description
             let page = UIViewController()
             page.view.tag = i
-            page.view.backgroundColor = viewColors[i]
+            page.view.backgroundColor = viewColors[i%4]
             testpages.append(page)
         }
         return createPageControllerWithMenuBar(pages: testpages)
@@ -64,12 +64,12 @@ class PageControllerWithMenuBar: UIViewController, MenuSelectionDelegate {
         let titleLabel = UILabel()
         titleLabel.textColor = UIColor.white
         titleLabel.text = "Home"
-        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
         let size = titleLabel.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         titleLabel.frame = CGRect.init(x: 0, y: 0, width: size.width, height: size.height)
         navigationItem.titleView = titleLabel
         
-        sections = ["Home", "Beaty", "News", "Settings"]
+        sections = ["Home", "Beaty", "News", "Settings", "Settings","Settings"]
         setupNavBarButtons()
         setupViewConstraints()
         
