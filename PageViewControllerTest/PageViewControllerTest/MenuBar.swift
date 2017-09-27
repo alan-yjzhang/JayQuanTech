@@ -53,6 +53,7 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     }
     func selectMenuItem(menuIndex: Int){
         let indexPath = IndexPath(item: menuIndex, section: 0)
+        currentSelectedItem = menuIndex
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
