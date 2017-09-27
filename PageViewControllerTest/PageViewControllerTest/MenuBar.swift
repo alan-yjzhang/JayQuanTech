@@ -27,7 +27,8 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     
     let reuseIdentifier = "Cell"
     let menuImageNames = ["home", "trending", "subscriptions", "account", "home", "trending", "subscriptions"]
-    let visibleMenuCount : CGFloat = 4
+    let maxVisibleMenuCount : CGFloat = 4
+    var visibleMenuCount : CGFloat = 4
     var currentSelectedItem = 0
     
     override init(frame: CGRect) {
@@ -44,6 +45,7 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     }
     override func layoutSubviews() {
         collectionView.frame = self.frame
+        visibleMenuCount = min(maxVisibleMenuCount, CGFloat(menuImageNames.count) )
         super.layoutSubviews()
         
         let indexPath = IndexPath(item: currentSelectedItem, section: 0)
@@ -58,8 +60,8 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentSelectedItem = indexPath.item
-//        delegate?.menuItemSelected(menuIdx: indexPath.item)
-        print("*** user select", indexPath.item)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        delegate?.menuItemSelected(menuIdx: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -90,7 +92,27 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
+    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+
+        let pageWidth = frame.width/visibleMenuCount
+        let currentXOffset = collectionView.contentOffset.x
+        let nextXOffset = proposedContentOffset.x
+        let maxIndex = ceil(currentXOffset / pageWidth)
+        let minIndex = floor(currentXOffset / pageWidth)
+        
+        var index: CGFloat = 0
+        
+        if nextXOffset > currentXOffset {
+            index = maxIndex
+        } else {
+            index = minIndex
+        }
+        
+        let xOffset = pageWidth * index
+        let point = CGPoint(x: xOffset, y: 0)
+        
+        return point
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
