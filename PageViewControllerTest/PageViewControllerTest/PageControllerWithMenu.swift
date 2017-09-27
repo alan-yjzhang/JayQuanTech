@@ -27,6 +27,7 @@ class PageControllerWithMenuBar: UIViewController, MenuSelectionDelegate {
 
     let menuBar:MenuBar = {
         let mb = MenuBar()
+        mb.menuNames = ["home", "trending", "subscriptions", "account", "home", "trending", "subscriptions"]
         return mb
     }()
     let pageViewController:UIPageViewController = {

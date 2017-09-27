@@ -19,37 +19,58 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.returnRGBColor(r: 230, g: 32, b: 32, alpha: 1)
+        cv.backgroundColor = self.menuBackgroundColor
         cv.dataSource = self
         cv.delegate = self
         return cv
     }()
     
     let reuseIdentifier = "Cell"
-    let menuImageNames = ["home", "trending", "subscriptions", "account", "home", "trending", "subscriptions"]
+//    let menuNames = ["home", "trending", "subscriptions", "account", "home", "trending", "subscriptions"]
+    var menuNames: [String]? {
+        didSet{
+            if let count = menuNames?.count {
+                visibleMenuCount = min(maxVisibleMenuCount, CGFloat(count) )
+                visibleMenuCount = visibleMenuCount == 0 ? 1 : visibleMenuCount
+                if self.isViewSetup {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
+    
     let maxVisibleMenuCount : CGFloat = 4
     var visibleMenuCount : CGFloat = 4
     var currentSelectedItem = 0
-    
+    private var isViewSetup = false
+    var menuBackgroundColor = UIColor.black {
+        didSet{
+            self.collectionView.backgroundColor = menuBackgroundColor
+        }
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        collectionView.register(MenuImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        setupViews()
+//        setupHorizontalBar()
+       
+    }
+    func setupViews(){
+        //        collectionView.register(MenuImageCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(MenuTitleCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         addSubview(collectionView)
         
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
-       
-//        setupHorizontalBar()
-       
+        self.isViewSetup = true
     }
     override func layoutSubviews() {
         collectionView.frame = self.frame
-        visibleMenuCount = min(maxVisibleMenuCount, CGFloat(menuImageNames.count) )
         super.layoutSubviews()
         
-        let indexPath = IndexPath(item: currentSelectedItem, section: 0)
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        if self.menuNames != nil, !self.menuNames!.isEmpty {
+            let indexPath = IndexPath(item: currentSelectedItem, section: 0)
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        }
     }
     func selectMenuItem(menuIndex: Int){
         let indexPath = IndexPath(item: menuIndex, section: 0)
@@ -57,7 +78,10 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return menuImageNames.count
+        if let count = menuNames?.count {
+            return count
+        }
+        return 0
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         currentSelectedItem = indexPath.item
@@ -68,14 +92,14 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         #if false
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MenuImageCell
-        cell.imageView.image = UIImage(named: menuImageNames[indexPath.item])?.withRenderingMode(.alwaysTemplate)
+        cell.imageView.image = UIImage(named: menuNames[indexPath.item])?.withRenderingMode(.alwaysTemplate)
         cell.imageView.tintColor = UIColor.returnRGBColor(r: 91, g: 14, b: 13, alpha: 1)
         #else
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MenuTitleCell
-            cell.titleLabel.text = menuImageNames[indexPath.item]
+            cell.titleLabel.text = menuNames?[indexPath.item]
         #endif
         
-        cell.menuTitle = menuImageNames[indexPath.item]
+        cell.menuTitle = menuNames?[indexPath.item]
         if indexPath.item == currentSelectedItem {
             cell.isSelected = true
             cell.isHighlighted = true
