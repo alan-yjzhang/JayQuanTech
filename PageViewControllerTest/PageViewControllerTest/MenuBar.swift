@@ -20,6 +20,7 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = self.menuBackgroundColor
+        cv.autoresizingMask = .flexibleWidth
         cv.dataSource = self
         cv.delegate = self
         return cv
@@ -62,8 +63,12 @@ class MenuBar:UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICo
         addConstraintsWithFormat(format: "H:|[v0]|", views: collectionView)
         addConstraintsWithFormat(format: "V:|[v0]|", views: collectionView)
         self.isViewSetup = true
+        self.autoresizingMask = .flexibleWidth //for rotation
     }
     override func layoutSubviews() {
+        if collectionView.frame.width != self.frame.width { // rotation
+            collectionView.reloadData()
+        }
         collectionView.frame = self.frame
         super.layoutSubviews()
         
